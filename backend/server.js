@@ -1,1 +1,39 @@
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+app.get("/", (req, res) => res.send("Barricade backend running 🚧"));
+
+app.post("/create-checkout-session", async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [{ price: process.env.PRICE_ID, quantity: 1 }],
+      success_url: `${process.env.FRONTEND_URL}/?success=1&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/?canceled=1`,
+    });
+
+    res.json({ url: session.url });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: "Stripe error" });
+  }
+});
+
+app.get("/verify-session", async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+    res.json({ paid: session.status === "complete" && session.payment_status === "paid" });
+  } catch (e) {
+    res.json({ paid: false });
+  }
+});
+
+const PORT = process.env.PORT || 4242;
+app.listen(PORT, () => console.log("Barricade backend live on", PORT));
