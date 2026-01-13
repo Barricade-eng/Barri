@@ -1,0 +1,7 @@
+[build]
+  base = "backend/frontend"
+  publish = "."
+
+# optional: if you don't use Netlify Functions, keep this off
+[functions]
+  directory = "netlify/functions"
