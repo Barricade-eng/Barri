@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barricade</title>
+  <style>
+    *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    body{margin:0;background:#0b0f14;color:#e9eef5}
+    .wrap{max-width:900px;margin:0 auto;padding:18px}
+    .card{background:#0e1520;border:1px solid #223047;border-radius:16px;padding:16px;margin-top:14px}
+    label{display:block;margin-top:10px;margin-bottom:6px;color:#b7c3d6;font-size:14px}
+    input,textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #223047;background:#0b0f14;color:#e9eef5}
+    button{margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid #2d3f5e;background:#142033;color:#e9eef5}
+    button.pro{border-color:#4c7dff}
+    pre{white-space:pre-wrap}
+    .status{padding:10px;border:1px solid #223047;border-radius:12px;background:#0e1520;color:#b7c3d6;margin-top:10px}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <h1>Barricade 🚧</h1>
+    <p>Call sheet + invoice tools. Export is Pro.</p>
+    <div class="status" id="proStatus">Checking Pro...</div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Call Sheet</h2>
+      <label>Project</label>
+      <input id="csTitle" placeholder="NIGHT TRAIN" />
+      <label>Date</label>
+      <input id="csDate" type="date" />
+      <label>Location</label>
+      <input id="csLoc" placeholder="City / Address" />
+      <label>Crew/Cast (one per line)</label>
+      <textarea id="csPeople" rows="6" placeholder="Director: ...&#10;DP: ...&#10;Talent: ..."></textarea>
+
+      <button id="csPreviewBtn">Preview</button>
+      <button class="pro" id="csExportBtn">Export (Pro)</button>
+      <pre id="csOut"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Invoice</h2>
+      <label>From</label>
+      <input id="invFrom" placeholder="Your Name / Studio" />
+      <label>To</label>
+      <input id="invTo" placeholder="Client Name" />
+      <label>Items (format: item - price)</label>
+      <textarea id="invItems" rows="6" placeholder="Shoot day - 200&#10;Edit - 150"></textarea>
+
+      <button id="invPreviewBtn">Preview</button>
+      <button class="pro" id="invExportBtn">Export (Pro)</button>
+      <pre id="invOut"></pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
